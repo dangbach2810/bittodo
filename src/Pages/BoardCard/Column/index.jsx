@@ -39,7 +39,6 @@ const Column = (props) => {
             setTitleColumn(column.name)
         }
     }, [])
-
     const selectAllText = (e) => {
         setIsFirstClick(false);
         if (isFirstClick) {
@@ -215,9 +214,11 @@ const Column = (props) => {
                     >
                         {
                             cards && cards.length > 0 && cards.map((item, index) => (
-                                <Draggable key={index} >
-                                    <Card card={item} />
-                                </Draggable>
+                                <>
+                                    <Draggable key={index} >
+                                        <Card card={item} />
+                                    </Draggable>
+                                </>
                             ))
                         }
                     </Container>

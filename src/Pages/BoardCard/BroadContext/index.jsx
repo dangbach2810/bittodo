@@ -23,7 +23,7 @@ const BroadContext = () => {
 	const [isShowForm, setIsShowForm] = useState(false);
 	const inputRef = useRef(null);
 	const [valueI, setValueI] = useState("");
-
+	const [userLogging, setUserLogging] = useState("");
 	let navigate = useNavigate();
 	const token = localStorage.getItem(ACCESS_TOKEN);
 	useEffect(() => {
@@ -62,6 +62,7 @@ const BroadContext = () => {
 			.then((res) => {
 				var dem = 0;
 				apiClient.fetchApiUser().then(response => {
+					setUserLogging(response.data.id)
 					apiClient.fetchApiGetMemberProjects(boardId).then(response2 => {
 						response2.data.forEach(element => {
 							if (element.id == response.data.id) {
@@ -75,7 +76,7 @@ const BroadContext = () => {
 								<>
 									<NotFound />
 								</>
-								);
+							);
 						}
 					});
 				});
@@ -181,7 +182,7 @@ const BroadContext = () => {
 		return (
 			<>
 				<div className='loading-style'>
-					<Loading type="spinningBubbles" color='white' /> 
+					<Loading type="spinningBubbles" color='white' />
 				</div>
 			</>
 		);
@@ -200,9 +201,9 @@ const BroadContext = () => {
 
 		setColumns(nCols);
 	};
-
 	return (
 		<>
+
 			<Menu checked="true" boardId={boardId} />
 			<div
 				className="trello-master"
@@ -225,17 +226,38 @@ const BroadContext = () => {
 							className: "column-drop-preview",
 						}}
 					>
-						{columns &&
-							columns.length > 0 &&
-							columns.map((item, index) => (
-								<Draggable key={item.id}>
-									<Column
-										onCardDrop={onCardDrop}
-										column={item}
-										onUpdataColumn={onUpdataColumn}
-									/>
-								</Draggable>
-							))}
+
+						{console.log("user:", userLogging)
+						}{console.log("cre:", board.createdBy)}
+
+						{userLogging == board.createdBy ?
+							<>
+								{columns &&
+									columns.length > 0 &&
+									columns.map((item, index) => (
+										<Draggable key={item.id}>
+											<Column
+												onCardDrop={onCardDrop}
+												column={item}
+												onUpdataColumn={onUpdataColumn}
+											/>
+										</Draggable>
+									))}
+							</>
+							:
+							<div style={{ display: 'flex' }}>
+								{columns &&
+									columns.length > 0 &&
+									columns.map((item, index) => (
+										<Column key={item.id}
+											onCardDrop={onCardDrop}
+											column={item}
+											onUpdataColumn={onUpdataColumn}
+										/>
+									))}
+							</div>
+						}
+
 					</Container>
 
 					{!isShowForm ? (
