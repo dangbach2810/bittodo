@@ -226,10 +226,6 @@ const BroadContext = () => {
 							className: "column-drop-preview",
 						}}
 					>
-
-						{console.log("user:", userLogging)
-						}{console.log("cre:", board.createdBy)}
-
 						{userLogging == board.createdBy ?
 							<>
 								{columns &&
@@ -240,6 +236,7 @@ const BroadContext = () => {
 												onCardDrop={onCardDrop}
 												column={item}
 												onUpdataColumn={onUpdataColumn}
+												isCheck={true}
 											/>
 										</Draggable>
 									))}
@@ -253,6 +250,7 @@ const BroadContext = () => {
 											onCardDrop={onCardDrop}
 											column={item}
 											onUpdataColumn={onUpdataColumn}
+											isCheck={false}
 										/>
 									))}
 							</div>

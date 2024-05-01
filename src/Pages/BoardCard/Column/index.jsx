@@ -24,7 +24,7 @@ const Column = (props) => {
     const [isFirstClick, setIsFirstClick] = useState(true);
     const inputRef = useRef(null);
 
-    const { column, onCardDrop, onUpdataColumn } = props;
+    const { column, onCardDrop, onUpdataColumn, isCheck } = props;
     const cards = column.cards;
 
     useEffect(() => {
@@ -163,6 +163,7 @@ const Column = (props) => {
             </Menu.Item>
         </Menu>
     );
+    console.log("props: ", props)
     return (
         <>
             <div className="column">
@@ -215,9 +216,16 @@ const Column = (props) => {
                         {
                             cards && cards.length > 0 && cards.map((item, index) => (
                                 <>
-                                    <Draggable key={index} >
-                                        <Card card={item} />
-                                    </Draggable>
+                                    {isCheck ?
+
+                                        <Draggable key={index} >
+                                            <Card card={item} />
+                                        </Draggable>
+                                        :
+                                        <div key={index} >
+                                            <Card card={item} />
+                                        </div>
+                                    }
                                 </>
                             ))
                         }

@@ -7,11 +7,11 @@ import Menu from "../HomePage/components/Menu";
 import { apiClient } from "../../Services";
 
 const ResumeUser = (props) => {
-    const {resumeUser} = props;
-    const [dataUser, setDataUser] = useState({});
-    const {userID} = useParams();
-    useEffect(() => {
-        apiClient
+	const { resumeUser } = props;
+	const [dataUser, setDataUser] = useState({});
+	const { userID } = useParams();
+	useEffect(() => {
+		apiClient
 			.fetchApiGetUserID(userID)
 			.then((res) => {
 				if (res.data) {
@@ -24,11 +24,11 @@ const ResumeUser = (props) => {
 			.catch((e) => {
 				// console.log(e);
 			});
-    }, [])
-    return (
-        <>
-            <Menu />
-            <div className="main-setting">
+	}, [])
+	return (
+		<>
+			<Menu />
+			<div className="main-setting">
 				<div className="main-content">
 					<div className="avatar-box">
 						<img
@@ -48,15 +48,15 @@ const ResumeUser = (props) => {
 					<div className="user-name">
 						<p>@{dataUser.email}</p>
 					</div>
-                    <div className="user-name">
+					<div className="user-name">
 						<p>Contact me: {dataUser.phoneNumber}</p>
 					</div>
-                    
+
 				</div>
-            </div>
-            <Footer />
-        </>
-    )
+			</div>
+			<Footer />
+		</>
+	)
 }
 
 export default ResumeUser;

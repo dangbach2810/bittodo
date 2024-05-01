@@ -22,7 +22,7 @@ const Settings = () => {
 	const [lastName, setLastName] = useState("");
 	const [address, setAddress] = useState("");
 	const [gender, setGender] = useState('');
-	const [dateOfBirth, setDateOfBirth] = useState("");
+	const [dateOfBirth, setDateOfBirth] = useState(new Date());
 
 	let [loading, setLoading] = useState(false);
 	const [dataUser, setDataUser] = useState({});
@@ -61,7 +61,7 @@ const Settings = () => {
 			.fetchApiUpdateUser(data)
 			.then((res) => {
 				alertSuccess("Chỉnh sửa thông tin thành công!", 2000);
-				window.location.reload("/settings");
+				//window.location.reload("/settings");
 
 			})
 			.catch((e) => {
@@ -293,7 +293,7 @@ const Settings = () => {
 										value={moment(dateOfBirth)}
 										onChange={(date) =>
 											setDateOfBirth(
-												date.locale("hn").format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]")
+												date.locale("vi").format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]")
 											)
 										}
 									/>

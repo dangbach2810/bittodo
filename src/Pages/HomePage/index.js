@@ -54,7 +54,7 @@ export default function HomePage() {
 			<Container className="main-content-container">
 				<Row className="main-row">
 					<Col className="sub-menu" sm={3}>
-						<SideBar projectPerson={projectPerson}/>
+						<SideBar projectPerson={projectPerson} />
 					</Col>
 					<Col className="main-content" sm={9}>
 						<Row>
@@ -63,7 +63,7 @@ export default function HomePage() {
 									title="Recently viewed"
 									iconName="fa-solid fa-clock"
 								/>
-								<BoardCard boardPerson={boardPerson}/>
+								<BoardCard boardPerson={boardPerson} />
 							</Col>
 						</Row>
 						<Row>
@@ -73,20 +73,11 @@ export default function HomePage() {
 									title="Zola App"
 									iconName="fa-solid fa-clock"
 								/>
-								<BoardCard boardPerson={boardPerson}/>
+								<BoardCard boardPerson={boardPerson} />
 								<CreateBoard />
 							</Col>
 						</Row>
-						<Row>
-							<Col sm={12}>
-								<WorkSpacesTitle iconName="fa-solid fa-circle-info" title="GUEST WORKSPACES" />
-								<BoardTitle
-									title="Đồ Án Web"
-									iconName="fa-solid fa-clock"
-								/>
-								{/* <BoardCard /> */}
-							</Col>
-						</Row>
+
 					</Col>
 				</Row>
 			</Container>
