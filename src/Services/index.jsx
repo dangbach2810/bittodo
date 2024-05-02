@@ -84,6 +84,9 @@ export const apiClient = {
   fetchApiGetProjectPerson() {
     return callApi('Projects/UserProject');
   },
+  fetchApiUpdateProName(id, data) {
+    return callApi(`Projects/Name/${id}`, "put", data);
+  },
 
   // Tabs
 

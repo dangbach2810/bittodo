@@ -19,7 +19,8 @@ const BroadContext = () => {
 	const { boardId } = useParams();
 	const [board, setBoard] = useState({});
 	const [columns, setColumns] = useState([]);
-	const [title, setTitle] = useState("");
+	const [title, setTitle] = useState("")
+
 	const [isShowForm, setIsShowForm] = useState(false);
 	const inputRef = useRef(null);
 	const [valueI, setValueI] = useState("");
@@ -64,6 +65,7 @@ const BroadContext = () => {
 				apiClient.fetchApiUser().then(response => {
 					setUserLogging(response.data.id)
 					apiClient.fetchApiGetMemberProjects(boardId).then(response2 => {
+
 						response2.data.forEach(element => {
 							if (element.id == response.data.id) {
 								dem++;
@@ -71,7 +73,7 @@ const BroadContext = () => {
 						});
 						if (res.data !== null && res.data && dem != 0) {
 							setBoard(res.data);
-							setTitle(board.name)
+							setTitle(res.data.name)
 						} else {
 							return (
 								<>
@@ -79,12 +81,14 @@ const BroadContext = () => {
 								</>
 							);
 						}
+
 					});
 				});
 			})
 			.catch((e) => {
 				return <NotFound />;
 			});
+
 	}, []);
 
 	useEffect(() => {
@@ -203,8 +207,19 @@ const BroadContext = () => {
 		setColumns(nCols);
 	};
 	const handleClickOutside = (e) => {
-		console.log(e.target.value)
+		const name = e.target.value
+		if (name != board.name) {
+
+			let data = {
+				"name": name
+			}
+			console.log(data)
+			apiClient.fetchApiUpdateProName(boardId, data).then((res) => {
+
+			})
+		}
 	}
+
 	return (
 		<>
 
