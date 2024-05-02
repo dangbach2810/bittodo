@@ -19,7 +19,7 @@ const BroadContext = () => {
 	const { boardId } = useParams();
 	const [board, setBoard] = useState({});
 	const [columns, setColumns] = useState([]);
-
+	const [title, setTitle] = useState("");
 	const [isShowForm, setIsShowForm] = useState(false);
 	const inputRef = useRef(null);
 	const [valueI, setValueI] = useState("");
@@ -71,6 +71,7 @@ const BroadContext = () => {
 						});
 						if (res.data !== null && res.data && dem != 0) {
 							setBoard(res.data);
+							setTitle(board.name)
 						} else {
 							return (
 								<>
@@ -201,10 +202,19 @@ const BroadContext = () => {
 
 		setColumns(nCols);
 	};
+	const handleClickOutside = (e) => {
+		console.log(e.target.value)
+	}
 	return (
 		<>
 
 			<Menu checked="true" boardId={boardId} />
+			<input
+				class="board-title"
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+				onBlur={handleClickOutside}
+			/>
 			<div
 				className="trello-master"
 				style={{

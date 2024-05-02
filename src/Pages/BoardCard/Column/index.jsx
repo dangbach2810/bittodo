@@ -92,32 +92,36 @@ const Column = (props) => {
     }
 
     const handleAddNewCard = () => {
-        if (!valueTextArea) {
-            textAreaRef.current.focus();
-            return;
-        }
+        if (isCheck) {
 
-        const newCard = {
-            name: valueTextArea,
-            numberMember: 5,
-            timeExpiry: "2022-06-12T02:34:18.646Z",
-            order: cards.length
-        }
-
-        apiClient.fetchApiCreateCard(column.id, newCard).then(res => {
-            if (res.data) {
-                // console.log("Create Card Success.")
-            } else {
-                // console.log("Create Card Fail.")
+            if (!valueTextArea) {
+                textAreaRef.current.focus();
+                return;
             }
-        })
-        let newColumn = { ...column };
-        newColumn.cards = [...newColumn.cards, newCard];
-        newColumn.cardOrder = newColumn.cards.map(card => card.id);
 
-        onUpdataColumn(newColumn);
-        setValueTextArea("");
-        setIsShowAddNewCard(false);
+            const newCard = {
+                name: valueTextArea,
+                numberMember: 5,
+                timeExpiry: "2022-06-12T02:34:18.646Z",
+                order: cards.length,
+                description: ""
+            }
+
+            apiClient.fetchApiCreateCard(column.id, newCard).then(res => {
+                if (res.data) {
+                    // console.log("Create Card Success.")
+                } else {
+                    // console.log("Create Card Fail.")
+                }
+            })
+            let newColumn = { ...column };
+            newColumn.cards = [...newColumn.cards, newCard];
+            newColumn.cardOrder = newColumn.cards.map(card => card.id);
+
+            onUpdataColumn(newColumn);
+            setValueTextArea("");
+            setIsShowAddNewCard(false);
+        }
 
     }
 
@@ -163,7 +167,7 @@ const Column = (props) => {
             </Menu.Item>
         </Menu>
     );
-    console.log("props: ", props)
+
     return (
         <>
             <div className="column">
@@ -219,36 +223,41 @@ const Column = (props) => {
                                     {isCheck ?
 
                                         <Draggable key={index} >
-                                            <Card card={item} />
+                                            <Card card={item} isCheck={isCheck} />
                                         </Draggable>
                                         :
                                         <div key={index} >
-                                            <Card card={item} />
+                                            <Card card={item} isCheck={isCheck} />
                                         </div>
                                     }
                                 </>
                             ))
                         }
                     </Container>
-                    {isShowAddNewCard && <div className="add-content-card">
-                        <Input.Group compact>
-                            <TextArea rows={2} placeholder="Enter a title for this card.." ref={textAreaRef}
-                                value={valueTextArea}
-                                onChange={e => setValueTextArea(e.target.value)}
-                            />
-                            <div className="gr_biit">
-                                <Button type="primary" onClick={() => handleAddNewCard()}>Add Card</Button>
-                                <CloseOutlined onClick={() => setIsShowAddNewCard(false)} />
+                    {isCheck && <>
+                        {isShowAddNewCard && <div className="add-content-card">
+                            <Input.Group compact>
+                                <TextArea rows={2} placeholder="Enter a title for this card.." ref={textAreaRef}
+                                    value={valueTextArea}
+                                    onChange={e => setValueTextArea(e.target.value)}
+                                />
+                                <div className="gr_biit">
+                                    <Button type="primary" onClick={() => handleAddNewCard()}>Add Card</Button>
+                                    <CloseOutlined onClick={() => setIsShowAddNewCard(false)} />
+                                </div>
+                            </Input.Group>
+                        </div>}
+                        {!isShowAddNewCard && <footer>
+                            <div className="footer-action">
+                                <div className="bg_fill" onClick={() => setIsShowAddNewCard(true)}>
+                                    <span className="icon_plus"><PlusCircleOutlined /></span> Add a Card
+                                </div>
                             </div>
-                        </Input.Group>
-                    </div>}
-                    {!isShowAddNewCard && <footer>
-                        <div className="footer-action">
-                            <div className="bg_fill" onClick={() => setIsShowAddNewCard(true)}>
-                                <span className="icon_plus"><PlusCircleOutlined /></span> Add a Card
-                            </div>
-                        </div>
-                    </footer>}
+                        </footer>}
+
+                    </>
+                    }
+
                 </ul>
 
 

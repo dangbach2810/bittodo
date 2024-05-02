@@ -5,7 +5,7 @@ import { apiClient } from '../../../Services';
 import ModalCard from '../ModalCard';
 
 const Card = (props) => {
-    const { card } = props;
+    const { card, isCheck } = props;
     const { boardId } = useParams();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [titleCard, setTitleCard] = useState("");
@@ -94,6 +94,7 @@ const Card = (props) => {
                 setTitleCard={setTitleCard}
                 memberCard={memberCard}
                 memberMoreOne={memberMoreOne}
+                isCheck={isCheck}
                 handleUpdateCardMember={handleUpdateCardMember}
             />
 

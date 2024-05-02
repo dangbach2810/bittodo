@@ -7,7 +7,7 @@ import BoardWidget from "../common/BoardWidget";
 import { BACKGROUD_BOARD } from "../../actions/dataBackgroud";
 import moment from "moment";
 function SideBar(props) {
-	const [dateOfBirth, setDateOfBirth] = useState(new Date());
+
 	const { projectPerson } = props;
 	const [active, setActive] = useState(true)
 	const handleClick = () => {

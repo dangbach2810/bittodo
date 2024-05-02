@@ -1,8 +1,10 @@
 .main-content-container {
   margin-top: 70px;
   z-index: 0;
+  overflow-x: hidden;
+
   .sub-menu {
-    height: 500px;
-    border: 2px solid grey;
+    height: 85vh;
+    border-right: 2px black solid;
   }
 }

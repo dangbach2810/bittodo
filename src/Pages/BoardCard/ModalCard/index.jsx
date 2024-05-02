@@ -1,22 +1,23 @@
 import { Input, Button, Modal, Progress, Checkbox } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useState, useEffect, useRef } from 'react';
-import { CloseOutlined, SisternodeOutlined } from "@ant-design/icons";
+
 import './style.scss';
 import TaskCard from '../TaskCard';
 import { applyDrag } from '../../../Utils/dragDrop';
 import { apiClient } from '../../../Services';
 import NotFound from '../../NotFound';
 import { mapOrderCol } from '../../../Utils/sort';
+import { alertErrors, alertSuccess } from "../../../Contains/Config";
 import _ from "lodash";
-import GroundAvatar from '../../../Components/common/GroundAvatar';
-import { BASE_URL_IMAGE } from '../../../Contains/ConfigURL';
+
 
 const ModalCard = (props) => {
-    const { isModalVisible, handleOk, handleCancel, card, titleCard, setTitleCard, memberCard, memberMoreOne, handleUpdateCardMember } = props;
+    const { isModalVisible, handleOk, handleCancel, card, titleCard, setTitleCard, memberCard, handleUpdateCardMember, isCheck } = props;
     const [isShowForm, setIsShowForm] = useState(false);
     const inputRef = useRef(null);
     const [data, setData] = useState([]);
+    const [description, setDescription] = useState("");
     const [percent, setPercent] = useState(0);
     const [isShowMember, setIsShowMember] = useState(false);
 
@@ -26,6 +27,8 @@ const ModalCard = (props) => {
                 if (res.data !== null && res.data) {
                     setData(mapOrderCol(res.data));
                     totalPercentTask(res.data);
+                    setDescription(card.description)
+
                 } else {
                     return <NotFound />;
                 }
@@ -57,6 +60,7 @@ const ModalCard = (props) => {
                 timeExpiry: "2022-07-07T06:14:16.538Z",
                 isActive: newData[index].isActive,
                 order: index
+
             };
             apiClient.fetchApiUpdateTask(data[index].id, dataTasks).then((res) => {
                 if (res.data) {
@@ -137,7 +141,16 @@ const ModalCard = (props) => {
         setData([...tasks]);
         setPercent(Math.round(Math.ceil(taskCheckedCount / tasks.length * 100)))
     }
-
+    const handleSaveDes = () => {
+        if (isCheck) {
+            let data = {
+                "description": description
+            };
+            apiClient.fetchApiUpdateDescription(card.id, data).then(res => {
+                alertSuccess("Thêm mô tả thành công!", 2000);
+            })
+        }
+    };
     return (
         <>
             <Modal visible={isModalVisible} onOk={onOk} onCancel={handleCancel} >
@@ -147,24 +160,42 @@ const ModalCard = (props) => {
                         onMouseDown={e => e.preventDefault()}
                     />
                 }
-                <input
-                    style={{ width: "87%" }}
-                    type="text"
-                    value={titleCard}
-                    onChange={e => setTitleCard(e.target.value)}
-                    className="card_value_title"
-                    onClick={() => setIsShowMember(false)}
-                />
+                {isCheck ?
+
+                    <input
+                        style={{ width: "87%" }}
+                        type="text"
+                        value={titleCard}
+                        onChange={e => setTitleCard(e.target.value)}
+                        className="card_value_title"
+                        onClick={() => setIsShowMember(false)} />
+                    :
+                    <span style={{ width: "87%", fontSize: '20px' }}>
+                        {titleCard}
+                    </span>
+
+
+                }
                 {/* <p className="sub-title">in list Current Sprint</p> */}
 
                 <hr></hr>
                 <h6>
                     Description :
                 </h6>
-                <TextArea rows={4} placeholder="Add a more detailed description..." />
-                <div className="gr_biit" style={{ margin: '5px 0px 15px' }}>
-                    <Button type="primary">Save</Button>
-                </div>
+                {isCheck ?
+                    <>
+                        <TextArea rows={4} onChange={(e) => setDescription(e.target.value)} value={description != null ? description : ""} placeholder="Add a more detailed description..." />
+                        <div className="gr_biit" style={{ margin: '5px 0px 15px' }}>
+                            <Button type="primary" onClick={handleSaveDes}>Save</Button>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <TextArea rows={4} value={description != null ? description : ""} placeholder="Add a more detailed description..." />
+                    </>
+
+                }
+
                 <TaskCard
                     onChange={onChange}
                     percent={percent}
@@ -175,6 +206,7 @@ const ModalCard = (props) => {
                     handleAddTaskNew={handleAddTaskNew}
                     handleRemoveTask={handleRemoveTask}
                     memberCard={memberCard}
+                    isCheck={isCheck}
                 />
 
 

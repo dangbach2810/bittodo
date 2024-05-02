@@ -38,10 +38,10 @@ export const apiClient = {
     return callApi("Users/ForgotPassword", "post", data);
   },
 
-  fetchApiGetUserID(idUser){
+  fetchApiGetUserID(idUser) {
     return callApi(`Users/GetById/${idUser}`);
   },
-  
+
   // update info user
   fetchApiUpdateUser(data) {
     return callApi("Users", "put", data);
@@ -77,11 +77,11 @@ export const apiClient = {
     return callApi(`Projects/${id}`);
   },
 
-  fetchApiGetNameBoard(name){
+  fetchApiGetNameBoard(name) {
     return callApi(`Projects/GetName/${name}`)
   },
 
-  fetchApiGetProjectPerson(){
+  fetchApiGetProjectPerson() {
     return callApi('Projects/UserProject');
   },
 
@@ -163,6 +163,9 @@ export const apiClient = {
 
   fetchApiUpdateCardName(id, data) {
     return callApi(`Cards/Name/${id}`, "put", data);
+  },
+  fetchApiUpdateDescription(id, data) {
+    return callApi(`Cards/Des/${id}`, "put", data);
   },
 
   // PUT Move

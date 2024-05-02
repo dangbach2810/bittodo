@@ -51,7 +51,7 @@ export default function HomePage() {
 	return (
 		<>
 			<Menu />
-			<Container className="main-content-container">
+			<div className="main-content-container">
 				<Row className="main-row">
 					<Col className="sub-menu" sm={3}>
 						<SideBar projectPerson={projectPerson} />
@@ -80,7 +80,7 @@ export default function HomePage() {
 
 					</Col>
 				</Row>
-			</Container>
+			</div>
 		</>
 	);
 }

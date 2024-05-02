@@ -17,7 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import ForgotPassWordPage from './Pages/ForgotPassWordPage';
 import ResumeUser from './Pages/ResumeUser';
 
-library.add(fab,fas)
+library.add(fab, fas)
 function App() {
   const token = localStorage.getItem(ACCESS_TOKEN);
   return (

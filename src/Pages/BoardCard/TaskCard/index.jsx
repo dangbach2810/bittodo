@@ -7,7 +7,7 @@ import { PlusCircleOutlined, CloseOutlined } from "@ant-design/icons";
 import { apiClient } from "../../../Services";
 
 const TaskCard = (props) => {
-    const { percent, onChange, tasks, onTaskListDrop, handleAddTaskNew, card, handleRemoveTask, memberCard } = props;
+    const { percent, onChange, tasks, onTaskListDrop, handleAddTaskNew, card, handleRemoveTask, memberCard, isCheck } = props;
     const [isShowForm, setIsShowForm] = useState(false);
     const [valueTask, setValueTask] = useState("");
     const inputRef = useRef(null);
@@ -20,24 +20,26 @@ const TaskCard = (props) => {
 
 
     const handleCreateTask = () => {
-        let data = {
-            name: valueTask,
-            numberMember: 5,
-            icon: "Z",
-            comment: "Bách Đăng",
-            timeExpiry: "2022-07-07T06:14:16.538Z",
-            isActive: false,
-            order: tasks.length <= 0 ? 1 : ++tasks.length
-        }
-        apiClient.fetApiCreateTask(card.id, data).then(res => {
-            if (res.data) {
-                handleAddTaskNew(res.data);
-                setValueTask("");
-                setIsShowForm(false)
-            } else {
-                console.log("0");
+        if (isCheck) {
+            let data = {
+                name: valueTask,
+                numberMember: 5,
+                icon: "Z",
+                comment: "Bách Đăng",
+                timeExpiry: "2022-07-07T06:14:16.538Z",
+                isActive: false,
+                order: tasks.length <= 0 ? 1 : ++tasks.length
             }
-        })
+            apiClient.fetApiCreateTask(card.id, data).then(res => {
+                if (res.data) {
+                    handleAddTaskNew(res.data);
+                    setValueTask("");
+                    setIsShowForm(false)
+                } else {
+                    console.log("0");
+                }
+            })
+        }
 
     }
 
@@ -75,9 +77,16 @@ const TaskCard = (props) => {
             >
                 {
                     tasks.map((i, _i) => (
-                        <Draggable key={_i}>
-                            <ItemCard i={i} onChange={onChange} _i={_i} handleRemoveTask={() => handleRemoveTask(_i)} memberCard={memberCard} />
-                        </Draggable>
+                        isCheck ?
+                            <Draggable key={_i}>
+                                <ItemCard isCheck={isCheck} i={i} onChange={onChange} _i={_i} handleRemoveTask={() => handleRemoveTask(_i)} memberCard={memberCard} />
+                            </Draggable>
+                            :
+                            <div key={_i}>
+                                <ItemCard i={i} onChange={onChange} _i={_i} handleRemoveTask={() => handleRemoveTask(_i)} memberCard={memberCard} />
+                            </div>
+
+
                     ))
                 }
 
@@ -85,12 +94,14 @@ const TaskCard = (props) => {
 
             {!isShowForm ? (
                 <div className="mt-2">
-                    <Button onClick={() => setIsShowForm(true)}>
-                        <span className="icon_plus">
-                            <PlusCircleOutlined />
-                        </span>{" "}
-                        Add Task
-                    </Button>
+                    {isCheck &&
+                        <Button onClick={() => setIsShowForm(true)}>
+                            <span className="icon_plus">
+                                <PlusCircleOutlined />
+                            </span>{" "}
+                            Add Task
+                        </Button>
+                    }
                 </div>
             ) : (
                 <div className="add-content-list">

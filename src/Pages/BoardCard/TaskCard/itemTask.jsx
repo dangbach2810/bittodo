@@ -3,8 +3,9 @@ import { Checkbox } from 'antd';
 import { useEffect, useState } from 'react';
 import { BASE_URL_IMAGE } from '../../../Contains/ConfigURL';
 import { apiClient } from '../../../Services';
+import { alertErrors, alertSuccess } from "../../../Contains/Config";
 const ItemCard = (props) => {
-    const { onChange, _i, i, handleRemoveTask, memberCard } = props;
+    const { onChange, _i, i, handleRemoveTask, memberCard, isCheck } = props;
     const [isShowMember, setIsShowMember] = useState(false);
     const [oneMemberTask, setOneMemberTask] = useState("");
 
@@ -19,7 +20,12 @@ const ItemCard = (props) => {
     }, [])
 
     const handleRemoveTaskList = () => {
-        handleRemoveTask(_i);
+        if (isCheck) {
+            handleRemoveTask(_i);
+        }
+        else {
+            alertErrors("Thành viên không được phép xóa", 2000)
+        }
     }
 
     const handleMemberTaskList = () => {
@@ -41,45 +47,22 @@ const ItemCard = (props) => {
     return (
         <>
             <div className='footer-task d-flex task-drag-handle'>
-                <Checkbox
+                {isCheck ? <Checkbox
                     onChange={(e) => onChange(e, _i)}
                     checked={i.isActive}
                 ></Checkbox>
+                    :
+                    <Checkbox
+                        checked={i.isActive}
+                    ></Checkbox>
+                }
+
                 <p className={`task-name ${i.isActive ? 'unline' : ''}`}>{i.name}</p>
                 <div className='remove-task'>
                     <DeleteOutlined onClick={handleRemoveTaskList} />
                 </div>
-                {
-                    isShowMember && (
-                        <div className='list-member-card'>
-                            <div className='header-list d-flex'>
-                                <h6 className='header-title'>Member</h6>
-                                <span className='close-list-member' onClick={() => setIsShowMember(false)}>x</span>
-                            </div>
-                            <div className='body-list'>
-                                <h6 className='body-title'>Board members</h6>
-                                {
-                                    memberCard.length > 0 && memberCard.map((item, _i) => (
-                                        <div className='body-list-member' key={_i} onClick={() => handlTaskListMember(item)}>
-                                            <div className='member__item'>
-                                                <div className='item__avatar'>
-                                                    <img src={!item.urlAvatar ? "https://anhdep123.com/wp-content/uploads/2020/11/anh-cute-hoat-hinh.jpg" : BASE_URL_IMAGE + "/" + item.urlAvatar} />
-                                                </div>
-                                                <div className='item__name'>
-                                                    <p className='item__name-user'>
-                                                        {item.firstname + item.lastname}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                        </div>
-                    )
-                }
             </div>
-            <p>{oneMemberTask.email}</p>
+
         </>
     )
 }
