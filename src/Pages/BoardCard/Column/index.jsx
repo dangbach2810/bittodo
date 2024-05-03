@@ -3,14 +3,13 @@ import { mapOrder, mapOrderCol } from "../../../Utils/sort";
 import Card from "../Card";
 import { Container, Draggable } from "react-smooth-dnd";
 import { PlusCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-
 import { Input, Modal } from "antd";
 import { useState, useEffect, useRef } from 'react';
 import { CloseOutlined, AlignRightOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
 import { apiClient } from "../../../Services";
 import { alertErrors, alertSuccess, MODAL_ACTION_CLOSE, MODAL_ACTION_CONFIRM } from "../../../Contains/Config";
-
+import ConfirmModal from "../../../Components/common/ConfirmModals";
 
 const Column = (props) => {
 
@@ -20,13 +19,13 @@ const Column = (props) => {
     const [isShowAddNewCard, setIsShowAddNewCard] = useState(false);
     const [valueTextArea, setValueTextArea] = useState("");
     const textAreaRef = useRef(null);
-    const [cards, setCards] = useState([])
+
     const [titleColumn, setTitleColumn] = useState("");
     const [isFirstClick, setIsFirstClick] = useState(true);
     const inputRef = useRef(null);
 
     const { column, onCardDrop, onUpdataColumn, isCheck } = props;
-
+    const cards = column.cards;
 
     useEffect(() => {
         if (isShowAddNewCard === true && textAreaRef && textAreaRef.current) {
@@ -38,7 +37,6 @@ const Column = (props) => {
     useEffect(() => {
         if (column && column.name) {
             setTitleColumn(column.name)
-            setCards(column.cards)
         }
     }, [])
     const selectAllText = (e) => {
@@ -169,9 +167,7 @@ const Column = (props) => {
             </Menu.Item>
         </Menu>
     );
-    const onUpdateCard = (updateCard) => {
-        setCards(updateCard)
-    };
+
     return (
         <>
             <div className="column">
@@ -227,7 +223,7 @@ const Column = (props) => {
                                     {isCheck ?
 
                                         <Draggable key={index} >
-                                            <Card cards={cards} card={item} isCheck={isCheck} onUpdateCard={onUpdateCard} />
+                                            <Card card={item} isCheck={isCheck} />
                                         </Draggable>
                                         :
                                         <div key={index} >

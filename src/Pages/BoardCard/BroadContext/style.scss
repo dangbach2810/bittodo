@@ -13,11 +13,10 @@ body {
     line-height: 1.3em;
     font-size: 16px;
     height: 100vh;
-    overflow-y: hidden;
 }
 
 .trello-master {
-    height: 92vh;
+    height: 93vh;
     display: gird;
     grid-template-rows: 40px 50px 1fr;
     line-height: 1.3em;
@@ -25,7 +24,7 @@ body {
     background-position: center;
     // position: relative;
     z-index: 999;
-    overflow-x: auto;
+    overflow-x: scroll;
 
     .board-columns {
         display: flex;
