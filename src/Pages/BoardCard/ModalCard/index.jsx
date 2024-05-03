@@ -1,7 +1,7 @@
 import { Input, Button, Modal, Progress, Checkbox } from 'antd';
+import { PlusCircleOutlined, CloseOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import TextArea from 'antd/lib/input/TextArea';
 import { useState, useEffect, useRef } from 'react';
-
 import './style.scss';
 import TaskCard from '../TaskCard';
 import { applyDrag } from '../../../Utils/dragDrop';
@@ -9,18 +9,19 @@ import { apiClient } from '../../../Services';
 import NotFound from '../../NotFound';
 import { mapOrderCol } from '../../../Utils/sort';
 import { alertErrors, alertSuccess } from "../../../Contains/Config";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import _ from "lodash";
 
 
 const ModalCard = (props) => {
-    const { isModalVisible, handleOk, handleCancel, card, titleCard, setTitleCard, memberCard, handleUpdateCardMember, isCheck } = props;
+    const { isModalVisible, handleOk, handleCancel, cards, card, titleCard, setTitleCard, memberCard, handleUpdateCardMember, isCheck, onUpdateCard } = props;
     const [isShowForm, setIsShowForm] = useState(false);
     const inputRef = useRef(null);
     const [data, setData] = useState([]);
     const [description, setDescription] = useState("");
     const [percent, setPercent] = useState(0);
     const [isShowMember, setIsShowMember] = useState(false);
-
+    const { confirm } = Modal;
     useEffect(() => {
         apiClient.fetchApiGetTasks(card.id)
             .then((res) => {
@@ -151,6 +152,36 @@ const ModalCard = (props) => {
             })
         }
     };
+    const handleDeleteCard = (index) => {
+        const updatedCards = [...cards];
+        updatedCards.splice(index, 1);
+        onUpdateCard(updatedCards);
+    };
+    const handleDelete = () => {
+        confirm({
+            title: 'Bạn chắc chắn muốn xóa thẻ này',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Xác nhận xóa',
+            onOk() {
+                handleCancel()
+                apiClient.fetchApiDeleteCard(card.id).then(res => {
+                    if (res) {
+                        alertSuccess("Delete success.", 3000)
+                    } else {
+                        alertErrors("Delete Fail.", 3000)
+                    }
+                })
+                setTimeout(() => {
+                    handleDeleteCard(card.id)
+                }, 1000)
+            },
+            onCancel() {
+                // console.log('Cancel');
+            },
+
+        });
+
+    }
     return (
         <>
             <Modal visible={isModalVisible} onOk={onOk} onCancel={handleCancel} >
@@ -176,12 +207,13 @@ const ModalCard = (props) => {
 
 
                 }
-                {/* <p className="sub-title">in list Current Sprint</p> */}
+                <p className="sub-title">expected completion: 10/05/2024</p>
 
                 <hr></hr>
                 <h6>
                     Description :
                 </h6>
+
                 {isCheck ?
                     <>
                         <TextArea rows={4} onChange={(e) => setDescription(e.target.value)} value={description != null ? description : ""} placeholder="Add a more detailed description..." />
@@ -208,6 +240,11 @@ const ModalCard = (props) => {
                     memberCard={memberCard}
                     isCheck={isCheck}
                 />
+                <div className='btn-delete-card' onClick={handleDelete}>
+                    <FontAwesomeIcon icon="fa-solid fa-trash"
+                    />
+                    <span>Delete</span>
+                </div>
 
 
             </Modal>

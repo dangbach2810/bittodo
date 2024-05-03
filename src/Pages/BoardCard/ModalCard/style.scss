@@ -1,21 +1,31 @@
-.card_value_title{
+.card_value_title {
     border: none;
     outline: none;
-    padding: 10px;
+    padding: 10px 0;
     font-size: 26px;
 }
-.sub-title{
-    padding: 0 15px;
+
+.btn-delete-card {
+    font-size: 25px;
+    color: red;
+    cursor: pointer;
+    display: inline;
+}
+
+.sub-title {
+    font-size: 20px;
     transform: translateY(-10px);
 }
-.btn-checklist{
+
+.btn-checklist {
     display: flex;
     justify-content: end;
     position: relative;
-    .pos-ib12-pito{
+
+    .pos-ib12-pito {
         padding: 10px;
         background: white;
-        box-shadow: 0px 0px 20px rgba(0,0,0,0.6);
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
         position: absolute;
         top: 120%;
         right: 0;
@@ -25,28 +35,32 @@
     }
 }
 
-.task-checklist{
+.task-checklist {
     padding: 10px 20px;
     cursor: alias;
     transition: 0.6s ease-in;
-    &:hover{
+
+    &:hover {
         background: rgb(235, 235, 235);
     }
-    .header-task{
+
+    .header-task {
         margin-bottom: 10px;
         align-items: center;
-        .checklist-title{
+
+        .checklist-title {
             display: flex;
             align-items: center;
-            
-            .name-default{
+
+            .name-default {
                 font-weight: bold;
                 font-size: 16px;
                 margin-left: 5px;
             }
         }
     }
-    .footer-task{
+
+    .footer-task {
         display: flex;
         align-items: center;
         width: 50%;
@@ -54,21 +68,25 @@
         transition: .3s ease-in;
         border-bottom: 1px solid transparent;
         border-top: 1px solid transparent;
-        &:hover{
+
+        &:hover {
             box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
             width: 100%;
         }
-        &:hover > .remove-task{
+
+        &:hover>.remove-task {
             display: block;
         }
-        .task-name{
+
+        .task-name {
             margin-left: 10px;
             margin-top: 15px;
             overflow: hidden;
-            white-space: nowrap; 
+            white-space: nowrap;
             text-overflow: ellipsis;
             font-weight: bold;
-            &.unline{
+
+            &.unline {
                 text-decoration: line-through;
                 font-weight: 400;
             }
@@ -77,7 +95,7 @@
 }
 
 
-.remove-task{
+.remove-task {
     position: absolute;
     right: 20px;
     top: 10px;
@@ -85,25 +103,27 @@
 }
 
 @keyframes routeP {
-    0%{
-        transform:  rotate(0deg);
+    0% {
+        transform: rotate(0deg);
     }
-    50%{
-        transform: rotate(45deg);
+
+    50% {
+        transform: rotate(45deg);
     }
-    100%{
-        transform:  rotate(360deg);
+
+    100% {
+        transform: rotate(360deg);
     }
 }
 
-.add-member-card{
+.add-member-card {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
 
-.list-member{
-    position:absolute;
+.list-member {
+    position: absolute;
     width: 250px;
     top: 110%;
     right: 0;
@@ -113,44 +133,52 @@
     box-shadow: 0px 0px 10px rgba(80, 79, 79, 0.2);
     border-radius: 10px;
     z-index: 999;
-    .header-list{
+
+    .header-list {
         justify-content: center;
         position: relative;
         border-bottom: 1px solid gray;
-        .header-title{
-            
-        }
-        .close-list-member{
+
+        .header-title {}
+
+        .close-list-member {
             position: absolute;
             right: 10px;
             top: -3px;
             cursor: pointer;
         }
     }
-    .body-list{
+
+    .body-list {
         padding-top: 10px;
-        .member__item{
+
+        .member__item {
             display: flex;
             align-items: center;
             padding: 0 5px;
             transition: .3s ease-in;
-            &:hover{
+
+            &:hover {
                 background-color: rgba(80, 79, 79, 0.2);
             }
+
             cursor: pointer;
-            .item__avatar{
+
+            .item__avatar {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
                 box-sizing: border-box;
-                img{
+
+                img {
                     width: 100%;
                     height: 100%;
                     border-radius: 50%;
                 }
             }
-            .item__name{
-                .item__name-user{
+
+            .item__name {
+                .item__name-user {
                     margin-top: 15px;
                     margin-left: 10px;
                 }
@@ -160,8 +188,8 @@
 }
 
 
-.list-member-card{
-    position:fixed;
+.list-member-card {
+    position: fixed;
     width: 250px;
     top: 30%;
     right: 20%;
@@ -171,44 +199,52 @@
     box-shadow: 0px 0px 10px rgba(80, 79, 79, 0.2);
     border-radius: 10px;
     z-index: 999;
-    .header-list{
+
+    .header-list {
         justify-content: center;
         position: relative;
         border-bottom: 1px solid gray;
-        .header-title{
-            
-        }
-        .close-list-member{
+
+        .header-title {}
+
+        .close-list-member {
             position: absolute;
             right: 10px;
             top: -3px;
             cursor: pointer;
         }
     }
-    .body-list{
+
+    .body-list {
         padding-top: 10px;
-        .member__item{
+
+        .member__item {
             display: flex;
             align-items: center;
             padding: 0 5px;
             transition: .3s ease-in;
-            &:hover{
+
+            &:hover {
                 background-color: rgba(80, 79, 79, 0.2);
             }
+
             cursor: pointer;
-            .item__avatar{
+
+            .item__avatar {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
                 box-sizing: border-box;
-                img{
+
+                img {
                     width: 100%;
                     height: 100%;
                     border-radius: 50%;
                 }
             }
-            .item__name{
-                .item__name-user{
+
+            .item__name {
+                .item__name-user {
                     margin-top: 15px;
                     margin-left: 10px;
                 }
