@@ -147,7 +147,9 @@ export const apiClient = {
   fetchApiCreateCard(id, data) {
     return callApi(`Cards/${id}`, "post", data);
   },
-
+  fetchApiUpdateEsFinish(id, data) {
+    return callApi(`Cards/SetTime/${id}`, "put", data);
+  },
   fetchApiUpdateCard(id, data) {
     return callApi(`Cards/${id}`, "put", data);
   },

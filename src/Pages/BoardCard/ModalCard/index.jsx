@@ -157,15 +157,9 @@ const ModalCard = (props) => {
     };
     const handleChangeEsf = () => {
         let data = {
-            name: card.name,
-            numberMember: card.numberMember,
-            order: card.order,
-            timeExpiry: card.timeExpiry,
-            isActive: card.isActive,
-            description: card.description,
             estimatedFinish: estimatedFinish
         };
-        apiClient.fetchApiUpdateCard(card.id, data).then(res => { })
+        apiClient.fetchApiUpdateEsFinish(card.id, data).then(res => { })
     }
     return (
         <>
