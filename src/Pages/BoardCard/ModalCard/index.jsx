@@ -25,10 +25,21 @@ const ModalCard = (props) => {
     const [estimatedFinish, setEstimatedFinish] = useState(new Date())
     const [isShowMember, setIsShowMember] = useState(false);
     const { confirm } = Modal;
+
     useEffect(() => {
+        if (isModalVisible) {
+            // console.log('Abc modal', card)
+            // console.log('Abc modal title props', titleCard)
+            // console.log('Abc modal task', data)
+        }
+    }, [isModalVisible]);
+    useEffect(() => {
+        if (!isModalVisible) return;
+
         apiClient.fetchApiGetTasks(card.id)
             .then((res) => {
                 if (res.data !== null && res.data) {
+                    console.log('ABC', res.data)
                     setData(mapOrderCol(res.data));
                     totalPercentTask(res.data);
                     setDescription(card.description)
@@ -42,7 +53,7 @@ const ModalCard = (props) => {
             .catch((e) => {
                 return <NotFound />;
             });
-    }, [])
+    }, [isModalVisible])
 
     useEffect(() => {
         if (isShowForm === true && inputRef && inputRef.current) {

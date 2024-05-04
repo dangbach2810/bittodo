@@ -267,7 +267,7 @@ const BroadContext = () => {
 									))}
 							</>
 							:
-							<div style={{ display: 'flex' }}>
+							<div style={{ display: 'flex', border: '1px solid red' }}>
 								{columns &&
 									columns.length > 0 &&
 									columns.map((item, index) => (

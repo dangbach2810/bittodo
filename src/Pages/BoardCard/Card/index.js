@@ -36,9 +36,11 @@ const Card = (props) => {
         if (card && card.name) {
             setTitleCard(card.name);
         }
-    }, [])
+    }, [card.id])
 
     const showModal = () => {
+        console.log('Abc', card);
+
         setIsModalVisible(true);
     };
 
