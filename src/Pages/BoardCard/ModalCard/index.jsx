@@ -1,20 +1,22 @@
-import { Input, Button, Modal, Progress, Checkbox, DatePicker } from 'antd';
+import { Button, Modal, DatePicker } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useState, useEffect, useRef } from 'react';
 import moment from "moment";
-
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './style.scss';
 import TaskCard from '../TaskCard';
 import { applyDrag } from '../../../Utils/dragDrop';
 import { apiClient } from '../../../Services';
 import NotFound from '../../NotFound';
 import { mapOrderCol } from '../../../Utils/sort';
-import { alertErrors, alertSuccess } from "../../../Contains/Config";
+import { alertSuccess } from "../../../Contains/Config";
 import _ from "lodash";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const ModalCard = (props) => {
-    const { isModalVisible, handleOk, handleCancel, card, titleCard, setTitleCard, memberCard, handleUpdateCardMember, isCheck } = props;
+    const { isModalVisible, handleCancel, card, titleCard, setTitleCard, memberCard, isCheck, handleRemoveCard } = props;
+
     const [isShowForm, setIsShowForm] = useState(false);
     const inputRef = useRef(null);
     const [data, setData] = useState([]);
@@ -22,7 +24,7 @@ const ModalCard = (props) => {
     const [percent, setPercent] = useState(0);
     const [estimatedFinish, setEstimatedFinish] = useState(new Date())
     const [isShowMember, setIsShowMember] = useState(false);
-
+    const { confirm } = Modal;
     useEffect(() => {
         apiClient.fetchApiGetTasks(card.id)
             .then((res) => {
@@ -106,9 +108,7 @@ const ModalCard = (props) => {
         }
     }
 
-    const handlCardMember = (user) => {
-        handleUpdateCardMember(user);
-    }
+
 
     const onChange = (e, _i) => {
         data[_i].isActive = e.target.checked;
@@ -160,6 +160,22 @@ const ModalCard = (props) => {
             estimatedFinish: estimatedFinish
         };
         apiClient.fetchApiUpdateEsFinish(card.id, data).then(res => { })
+    }
+    const confirmDeleteCard = () => {
+        confirm({
+            title: 'Do you Want to delete these items?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Some descriptions',
+            onOk() {
+
+                handleRemoveCard(card.id)
+                alertSuccess("Delete success.", 3000)
+                handleCancel()
+            },
+            onCancel() {
+                // console.log('Cancel');
+            },
+        });
     }
     return (
         <>
@@ -231,8 +247,10 @@ const ModalCard = (props) => {
                     memberCard={memberCard}
                     isCheck={isCheck}
                 />
-
-
+                <div className="btn-delete-card" onClick={confirmDeleteCard}>
+                    <FontAwesomeIcon icon="fa-solid fa-trash" />
+                    Delete
+                </div>
             </Modal>
         </>
     )

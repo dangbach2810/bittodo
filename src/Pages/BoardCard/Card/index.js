@@ -1,35 +1,35 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import GroundAvatar from '../../../Components/common/GroundAvatar';
 import { apiClient } from '../../../Services';
 import ModalCard from '../ModalCard';
 
 const Card = (props) => {
-    const { card, isCheck } = props;
-    const { boardId } = useParams();
+    const { card, isCheck, handleRemoveCard } = props;
+    //const { boardId } = useParams();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [titleCard, setTitleCard] = useState("");
     const [memberCard, setMemberCard] = useState([]);
     const [memberMoreOne, setMemberMoreOne] = useState([]);
 
-    useEffect(() => {
-        apiClient.fetchApiGetMemberProjects(boardId).then(res => {
-            if (res.data) {
-                setMemberCard(res.data);
-            } else {
-            }
-        })
-    }, [])
+    // useEffect(() => {
+    //     apiClient.fetchApiGetMemberProjects(boardId).then(res => {
+    //         if (res.data) {
+    //             setMemberCard(res.data);
+    //         } else {
+    //         }
+    //     })
+    // }, [])
 
-    useEffect(() => {
-        apiClient.fetchApiGetCardUserMenbers(card.id).then(res => {
-            if (res.data) {
-                setMemberMoreOne(res.data);
-            } else {
-                // console.log("Fail.....")
-            }
-        })
-    }, [])
+    // useEffect(() => {
+    //     apiClient.fetchApiGetCardUserMenbers(card.id).then(res => {
+    //         if (res.data) {
+    //             setMemberMoreOne(res.data);
+    //         } else {
+    //             // console.log("Fail.....")
+    //         }
+    //     })
+    // }, [])
 
 
     useEffect(() => {
@@ -96,6 +96,7 @@ const Card = (props) => {
                 memberMoreOne={memberMoreOne}
                 isCheck={isCheck}
                 handleUpdateCardMember={handleUpdateCardMember}
+                handleRemoveCard={handleRemoveCard}
             />
 
         </>

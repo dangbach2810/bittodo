@@ -1,5 +1,3 @@
-
-import { mapOrder, mapOrderCol } from "../../../Utils/sort";
 import Card from "../Card";
 import { Container, Draggable } from "react-smooth-dnd";
 import { PlusCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
@@ -8,8 +6,8 @@ import { useState, useEffect, useRef } from 'react';
 import { CloseOutlined, AlignRightOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
 import { apiClient } from "../../../Services";
-import { alertErrors, alertSuccess, MODAL_ACTION_CLOSE, MODAL_ACTION_CONFIRM } from "../../../Contains/Config";
-import ConfirmModal from "../../../Components/common/ConfirmModals";
+import { alertErrors, alertSuccess } from "../../../Contains/Config";
+
 
 const Column = (props) => {
 
@@ -109,7 +107,7 @@ const Column = (props) => {
 
             apiClient.fetchApiCreateCard(column.id, newCard).then(res => {
                 if (res.data) {
-                    // console.log("Create Card Success.")
+                    newCard.id = res.data.id;
                 } else {
                     // console.log("Create Card Fail.")
                 }
@@ -124,7 +122,22 @@ const Column = (props) => {
         }
 
     }
+    const handleRemoveCard = (cardId) => {
+        if (isCheck) {
+            // Gọi hàm xóa thẻ từ API
+            apiClient.fetchApiDeleteCard(cardId).then(res => {
+                let updatedColumn = { ...column };
+                updatedColumn.cards = updatedColumn.cards.filter(card => card.id !== cardId);
+                updatedColumn.cardOrder = updatedColumn.cards.map(card => card.id);
+                onUpdataColumn(updatedColumn);
+                setValueTextArea("");
+                setIsShowAddNewCard(false);
+            }).catch(error => {
+                console.error("Error deleting card:", error);
+            });
+        }
 
+    }
 
     function fetchConfigApi(id, dataName) {
         try {
@@ -144,15 +157,15 @@ const Column = (props) => {
 
     }
 
-    const onModalAction = (type) => {
-        if (type === MODAL_ACTION_CLOSE) {
-            // do thing
-        }
+    // const onModalAction = (type) => {
+    //     if (type === MODAL_ACTION_CLOSE) {
+    //         // do thing
+    //     }
 
-        if (type === MODAL_ACTION_CONFIRM) {
-            // remove col
-        }
-    }
+    //     if (type === MODAL_ACTION_CONFIRM) {
+    //         // remove col
+    //     }
+    // }
 
     const menu = (
         <Menu>
@@ -223,11 +236,17 @@ const Column = (props) => {
                                     {isCheck ?
 
                                         <Draggable key={index} >
-                                            <Card card={item} isCheck={isCheck} />
+                                            <Card
+                                                card={item}
+                                                isCheck={isCheck}
+                                                handleRemoveCard={handleRemoveCard} />
                                         </Draggable>
                                         :
                                         <div key={index} >
-                                            <Card card={item} isCheck={isCheck} />
+                                            <Card
+                                                card={item}
+                                                isCheck={isCheck}
+                                            />
                                         </div>
                                     }
                                 </>
