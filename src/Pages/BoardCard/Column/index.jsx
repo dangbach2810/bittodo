@@ -1,9 +1,8 @@
 import Card from "../Card";
 import { Container, Draggable } from "react-smooth-dnd";
-import { PlusCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Input, Modal } from "antd";
 import { useState, useEffect, useRef } from 'react';
-import { CloseOutlined, AlignRightOutlined } from '@ant-design/icons';
+import { CloseOutlined, AlignRightOutlined, WarningOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
 import { apiClient } from "../../../Services";
 import { alertErrors, alertSuccess } from "../../../Contains/Config";
@@ -49,9 +48,9 @@ const Column = (props) => {
 
     function confirmModal(id) {
         confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleOutlined />,
-            content: 'Some descriptions',
+            title: 'Bạn chắc chắn muốn xóa cột này?',
+            icon: <WarningOutlined />,
+            content: 'Xóa vĩnh viễn cột này',
             onOk() {
                 apiClient.fetchApiDeleteTab(id).then(res => {
                     if (res) {
@@ -76,17 +75,20 @@ const Column = (props) => {
     }
 
     const handleClickOutSide = () => {
-        try {
-            let dataName = {
-                name: titleColumn
+        if (isCheck) {
+
+            try {
+                let dataName = {
+                    name: titleColumn
+                }
+                setTimeout(() => {
+                    fetchConfigApi(column.id, dataName);
+                }, 2000);
+            } catch (e) {
+                console.log(e);
             }
-            setTimeout(() => {
-                fetchConfigApi(column.id, dataName);
-            }, 3000);
-        } catch (e) {
-            console.log(e);
+            setIsFirstClick(true);
         }
-        setIsFirstClick(true);
     }
 
     const handleAddNewCard = () => {
@@ -150,11 +152,14 @@ const Column = (props) => {
     }
     // Handle OnChangeNameColumn
     const onChangeNameColumn = async (e) => {
-        if (titleColumn === e.target.value) {
-            return;
-        }
-        setTitleColumn(e.target.value);
+        if (isCheck) {
 
+            if (titleColumn === e.target.value) {
+                return;
+            }
+
+            setTitleColumn(e.target.value);
+        }
     }
 
     // const onModalAction = (type) => {
@@ -168,16 +173,16 @@ const Column = (props) => {
     // }
 
     const menu = (
-        <Menu>
+        <Menu style={{ backgroundColor: 'pink' }}>
             <Menu.Item key="1">
-                Add Card.
+                Thêm thẻ.
             </Menu.Item>
             <Menu.Item key="2">
-                <div onClick={() => confirmModal(column.id)}>Remove this column</div>
+                <div onClick={() => confirmModal(column.id)}>Xóa cột này</div>
             </Menu.Item>
-            <Menu.Item key="3">
+            {/* <Menu.Item key="3">
                 Something else
-            </Menu.Item>
+            </Menu.Item> */}
         </Menu>
     );
 

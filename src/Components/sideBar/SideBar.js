@@ -23,7 +23,7 @@ function SideBar(props) {
 						<span>
 							<FontAwesomeIcon icon="fa-brands fa-trello" />
 						</span>
-						<span>Boards</span>
+						<span>Home</span>
 					</div>
 				</Link>
 				<Link to="/workspace"
@@ -32,30 +32,17 @@ function SideBar(props) {
 				>
 					<div className={`content-wrapper ${active === false ? 'active' : null}`}>
 						<span>
-							<FontAwesomeIcon icon="fa-solid fa-bolt" />
-						</span>
-						<span>Home</span>
-					</div>
-				</Link>
-				<Link to="/"
-					onClick={handleClick}
-
-				>
-					<div className={`content-wrapper ${active === false ? 'active' : null}`}>
-						<span>
 							<FontAwesomeIcon icon="fa-solid fa-circle-check" />
 						</span>
-						<span>Complete</span>
+						<span>Workspace</span>
 					</div>
 				</Link>
+
 				<div className="work-space-container">
-					<p>Workspaces</p>
-					<Link to="" className="icon-plus">
-						<FontAwesomeIcon icon="fa-solid fa-plus" />
-					</Link>
+					<p>Danh sách dự án</p>
 				</div>
 				{
-					projectPerson.length > 0 && projectPerson.map((i, _i) => (
+					projectPerson.length > 0 ? projectPerson.map((i, _i) => (
 						<BoardWidget
 							key={i.id}
 							id={i.id}
@@ -63,7 +50,7 @@ function SideBar(props) {
 							avt={BACKGROUD_BOARD[i.background]}
 							largeWidget={true}
 						/>
-					))
+					)) : ""
 				}
 
 			</div>

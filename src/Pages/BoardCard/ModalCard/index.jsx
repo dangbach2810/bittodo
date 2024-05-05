@@ -2,7 +2,7 @@ import { Button, Modal, DatePicker } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useState, useEffect, useRef } from 'react';
 import moment from "moment";
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { WarningOutlined } from '@ant-design/icons';
 import './style.scss';
 import TaskCard from '../TaskCard';
 import { applyDrag } from '../../../Utils/dragDrop';
@@ -39,7 +39,6 @@ const ModalCard = (props) => {
         apiClient.fetchApiGetTasks(card.id)
             .then((res) => {
                 if (res.data !== null && res.data) {
-                    console.log('ABC', res.data)
                     setData(mapOrderCol(res.data));
                     totalPercentTask(res.data);
                     setDescription(card.description)
@@ -174,9 +173,9 @@ const ModalCard = (props) => {
     }
     const confirmDeleteCard = () => {
         confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleOutlined />,
-            content: 'Some descriptions',
+            title: 'Bạn chắc chắn muốn xóa thẻ này không?',
+            icon: <WarningOutlined />,
+            content: 'Xóa vĩnh viễn thẻ',
             onOk() {
 
                 handleRemoveCard(card.id)
@@ -230,18 +229,18 @@ const ModalCard = (props) => {
                 }
                 <hr></hr>
                 <h6>
-                    Description :
+                    Mô tả :
                 </h6>
                 {isCheck ?
                     <>
-                        <TextArea rows={4} onChange={(e) => setDescription(e.target.value)} value={description != null ? description : ""} placeholder="Add a more detailed description..." />
+                        <TextArea rows={4} onChange={(e) => setDescription(e.target.value)} value={description != null ? description : ""} placeholder="Thêm mô tả chi tiết hơn..." />
                         <div className="gr_biit" style={{ margin: '5px 0px 15px' }}>
-                            <Button type="primary" onClick={handleSaveDes}>Save</Button>
+                            <Button type="primary" onClick={handleSaveDes}>Lưu</Button>
                         </div>
                     </>
                     :
                     <>
-                        <TextArea rows={4} value={description != null ? description : ""} placeholder="Add a more detailed description..." />
+                        <TextArea rows={4} value={description != null ? description : ""} placeholder="Mô tả chi tiết..." />
                     </>
 
                 }
@@ -260,7 +259,7 @@ const ModalCard = (props) => {
                 />
                 <div className="btn-delete-card" onClick={confirmDeleteCard}>
                     <FontAwesomeIcon icon="fa-solid fa-trash" />
-                    Delete
+                    Xóa thẻ
                 </div>
             </Modal>
         </>

@@ -39,8 +39,6 @@ const Card = (props) => {
     }, [card.id])
 
     const showModal = () => {
-        console.log('Abc', card);
-
         setIsModalVisible(true);
     };
 

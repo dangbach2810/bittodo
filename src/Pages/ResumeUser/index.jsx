@@ -35,7 +35,7 @@ const ResumeUser = (props) => {
 							src={
 								dataUser.urlAvatar
 									? BASE_URL_IMAGE + "/" + dataUser.urlAvatar
-									: avatar
+									: "https://cdn.thoitiet247.edu.vn/wp-content/uploads/2024/03/avatar-xam-1.jpg"
 							}
 							alt="avatar"
 						/>

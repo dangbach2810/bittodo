@@ -3,22 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import "./BoardWidget.scss";
 
-function BoardWidget({ largeWidget, avt, title, id}) {
+function BoardWidget(props) {
+	const { largeWidget, avt, title, idProject, setIdTarget } = props
+	const handleChangeTarget = () => {
+		setIdTarget(idProject)
+	}
 	return (
-		<div>
-			<Link to={`/board/${id}/schedule`}>
-				<div className={`content-wrapper ${largeWidget ? "large" : "small"}`}>
-					{avt ? (
-						<img src={avt} alt=""></img>
-					) : (
-						<FontAwesomeIcon
-							className="icon-trello"
-							icon="fa-brands fa-trello"
-						/>
-					)}
-					<span>{title}</span>
-				</div>
-			</Link>
+		<div
+		>
+			<div onClick={handleChangeTarget} className={`content-wrapper ${largeWidget ? "large" : "small"}`}>
+				{avt ? (
+					<img src={avt} alt=""></img>
+				) : (
+					<FontAwesomeIcon
+						className="icon-trello"
+						icon="fa-brands fa-trello"
+					/>
+				)}
+				<span>{title}</span>
+			</div>
 		</div>
 	);
 }

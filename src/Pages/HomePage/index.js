@@ -68,9 +68,9 @@ export default function HomePage() {
 						</Row>
 						<Row>
 							<Col sm={12}>
-								<WorkSpacesTitle title="YOUR WORKSPACES" />
+								<WorkSpacesTitle title="Dự án của bạn" />
 								<BoardTitle
-									title="Zola App"
+									title="App"
 									iconName="fa-solid fa-clock"
 								/>
 								<BoardCard boardPerson={boardPerson} />

@@ -16,7 +16,7 @@ body {
 }
 
 .trello-master {
-    height: 93vh;
+    min-height: 90vh;
     display: gird;
     grid-template-rows: 40px 50px 1fr;
     line-height: 1.3em;
@@ -24,8 +24,8 @@ body {
     background-position: center;
     // position: relative;
     z-index: 999;
-    overflow-x: scroll;
-
+    overflow-x: auto;
+    overflow-y: auto;
     .board-columns {
         display: flex;
         margin: 0px $gap $gap;
@@ -255,7 +255,7 @@ body {
 }
 
 .board-title {
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .user-card {

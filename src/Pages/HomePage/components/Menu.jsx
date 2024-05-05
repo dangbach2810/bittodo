@@ -34,8 +34,8 @@ export default function Menu(props) {
 	const [title, setTitle] = useState('')
 	const [number, setNumber] = useState('')
 	const [indexBG, setIndexBG] = useState(0)
-	const [g63Value, setG63Value] = useState("Hãy tìm kiếm theo cách của bạn.")
-
+	const [g63Value, setG63Value] = useState("Tìm kiếm dự án.")
+	const { boardId } = props
 	const navigator = useNavigate();
 
 	useEffect(() => {
@@ -127,9 +127,8 @@ export default function Menu(props) {
 		if (value == '') {
 			return;
 		}
-		console.log(value);
 		apiClient.fetchApiGetNameBoard(value).then(res => {
-			if (res.data && res.data !== []) {
+			if (res.data && res.data !== null) {
 				setDataSearch(res.data);
 				setG63Value('Not Found.')
 			}
@@ -222,7 +221,6 @@ export default function Menu(props) {
 									handleChangeBackGround={handleChangeBackGround}
 								/>
 							</li>
-
 							{props.checked == "true" ? (
 								<li className="list-item">
 									<div className="gr_avatar">
@@ -233,7 +231,7 @@ export default function Menu(props) {
 
 							{props.checked == "true" ? (
 								<li className="list-item">
-									<button className="btn-add-create" onClick={showModal}><UserAddOutlined /> Add People</button>
+									<button className="btn-add-create" onClick={showModal}><UserAddOutlined />Thêm thành viên</button>
 									<AddPeopleModel
 										isModalVisible={isModalVisible}
 										handleOk={handleOk}

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import 'antd/dist/antd.css';
-import WorkSpaces from "./Pages/WorkSpaces";
+import Workspace from "./Pages/Workspace";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -28,7 +28,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/board/:boardId/schedule" element={<BroadContext />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/workspace" element={<WorkSpaces />} />
+          <Route path="/workspace" element={<Workspace />} />
           <Route path="/forgot-password" element={<ForgotPassWordPage />} />
           <Route path="/resume-user/:userID" element={<ResumeUser />} />
 

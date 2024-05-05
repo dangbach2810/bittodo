@@ -11,12 +11,12 @@ function AddPeopleModel(props) {
 	return (
 		<div>
 			<Modal
-				title="Add people in Project"
+				title="Thêm thành viên vào dự án"
 				visible={isModalVisible}
 				onOk={handleOk}
 				onCancel={handleCancel}
-				okText="Add People"
-				cancelText="Check"
+				okText="Thêm"
+				cancelText="Kiểm tra"
 			>
 				<Input
 					name="id"
@@ -29,7 +29,7 @@ function AddPeopleModel(props) {
 						<p>{nameText ? (
 							<>
 								<div className="list-client-37">
-									<img src={!nameText.urlAvatar ? "https://anhdep123.com/wp-content/uploads/2020/11/anh-cute-hoat-hinh.jpg" : BASE_URL_IMAGE + "/" + nameText.urlAvatar}>
+									<img src={!nameText.urlAvatar ? "https://bloganchoi.com/wp-content/uploads/2022/09/hinh-nen-co-4-la-may-man-avatar-dep-80-696x923.jpg" : BASE_URL_IMAGE + "/" + nameText.urlAvatar}>
 
 									</img>
 									<div className="list-client-37-name">

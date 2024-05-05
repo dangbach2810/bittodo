@@ -49,11 +49,9 @@ const TaskCard = (props) => {
         <div className='task-checklist'>
             <div className='header-task d-flex justify-content-between align-items-center'>
                 <div className='checklist-title'>
-                    <SisternodeOutlined /> <span className='name-default'>Checklist</span>
+                    <SisternodeOutlined /> <span className='name-default'>Danh mục</span>
                 </div>
-                <div className='checklist-delete'>
-                    <Button >Delete</Button>
-                </div>
+
             </div>
             <div className='body-task mb-2'>
                 <Progress percent={percent} />
@@ -99,7 +97,7 @@ const TaskCard = (props) => {
                             <span className="icon_plus">
                                 <PlusCircleOutlined />
                             </span>{" "}
-                            Add Task
+                            Thêm danh mục
                         </Button>
                     }
                 </div>

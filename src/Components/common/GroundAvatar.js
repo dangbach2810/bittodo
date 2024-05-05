@@ -2,10 +2,9 @@ import { Avatar, Divider, Tooltip } from 'antd';
 import { UserOutlined, AntDesignOutlined } from '@ant-design/icons';
 import './GroundAvatar.scss';
 import { BASE_URL_IMAGE } from '../../Contains/ConfigURL';
-import ResumeUser from '../../Pages/ResumeUser';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 const GroundAvatar = (props) => {
-    const { member } = props;
+    const { member, boardId } = props;
     const handleShowUser = (i) => {
         // window.location.replace(`/resume-user/${i.id}`)
         window.location.href = `/resume-user/${i.id}`;
@@ -24,7 +23,6 @@ const GroundAvatar = (props) => {
                         </Tooltip>
                     ))
                 }
-
             </Avatar.Group>
         </>
     )

@@ -209,7 +209,6 @@ const BroadContext = () => {
 	const handleClickOutside = (e) => {
 		const name = e.target.value
 		if (name != board.name) {
-
 			let data = {
 				"name": name
 			}
@@ -267,7 +266,7 @@ const BroadContext = () => {
 									))}
 							</>
 							:
-							<div style={{ display: 'flex', border: '1px solid red' }}>
+							<div style={{ display: 'flex' }}>
 								{columns &&
 									columns.length > 0 &&
 									columns.map((item, index) => (
