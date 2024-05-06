@@ -58,7 +58,9 @@ export const apiClient = {
   fetchApiGetProjects() {
     return callApi("Projects");
   },
-
+  fetchApiGetWorkspaceProjects() {
+    return callApi("Projects/Workspace");
+  },
   fetApiCreateProject(data) {
     return callApi("Projects", "post", data);
   },
@@ -89,7 +91,9 @@ export const apiClient = {
   },
 
   // Tabs
-
+  fetApiComplete(id) {
+    return callApi(`Tabs/Complete/${id}`);
+  },
   fetApiCreateTab(id, data) {
     return callApi(`Tabs/${id}`, "post", data);
   },

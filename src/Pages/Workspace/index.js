@@ -11,15 +11,16 @@ import { Card } from "antd";
 import BoardWidget from "../../Components/common/BoardWidget";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Complete from "../Complete"
+import { BACKGROUD_BOARD } from "../../actions/dataBackgroud";
 import Today from "../Today"
+
 import { apiClient } from "../../Services";
 export default function Workspace() {
 	const { Meta } = Card;
 	let navigate = useNavigate();
 	const token = localStorage.getItem(ACCESS_TOKEN);
-	const [idTarget, setIdTarget] = useState()
-	const [isShow, setShow] = useState(false)
 	const [project, setProject] = useState([]);
+	const [cards, setCards] = useState([])
 	useEffect(() => {
 		if (token) {
 			return;
@@ -28,27 +29,23 @@ export default function Workspace() {
 	}, [token]);
 
 	useEffect(() => {
-		apiClient.fetchApiGetProjects().then(res => {
+		apiClient.fetchApiGetWorkspaceProjects().then(res => {
 			if (res.data) {
 				setProject(res.data);
 			} else {
 			}
-
 		}).catch(e => {
 		});
 	}, [])
 
 	const setId = (id) => {
-		apiClient.fetApiProject(id).then(res => {
-			if (res.data) {
-				setIdTarget(res.data.id)
-				setShow(true)
-			} else {
-			}
+		apiClient.fetApiComplete(id).then(res => {
+			setCards(res.data)
+
 		}).catch(e => {
 		});
 	}
-	// console.log(project)
+	console.log("C: ", cards)
 	return (
 		<>
 			<Menu />
@@ -65,7 +62,7 @@ export default function Workspace() {
 									className="icon-trello"
 									icon="fa-solid fa-clock"
 								/>
-								<span>Tiến độ công việc</span>
+								<span>Công việc của bạn</span>
 							</div>
 						</Row>
 						<Row>
@@ -73,7 +70,7 @@ export default function Workspace() {
 								{project.map((data, key) => (
 									<BoardWidget key={key}
 										title={data.name}
-										avt="https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+										avt={BACKGROUD_BOARD[data.background]}
 										largeWidget={true}
 										idProject={data.id}
 										setIdTarget={setId}
@@ -83,26 +80,25 @@ export default function Workspace() {
 						</Row>
 					</Col>
 					<Col className="side-content" sm={3}>
-						<h4>Complete</h4>
+
+						<h4>Các thẻ đã hoàn thành hết nhiệm vụ</h4>
 						<div className="label-container">
-							<div className="label">
-								<span className="date">Dự kiến: 10-5-2024</span>
-								<p className="name">Thẻ: So sánh nhất</p>
-								<p className="content">Đang nằm ở cột: Done</p>
-								<p className="content">Đã hoàn thành 1/1 nhiệm vụ</p>
-							</div>
-							<div className="label">
-								<span className="date">Dự kiến: 10-5-2024</span>
-								<p className="name">Thẻ: So sánh nhất</p>
-								<p className="content">Đang nằm ở cột: Done</p>
-								<p className="content">Đã hoàn thành 1/1 nhiệm vụ</p>
-							</div>
-							<div className="label">
-								<span className="date">Dự kiến: 10-5-2024</span>
-								<p className="name">Thẻ: So sánh nhất</p>
-								<p className="content">Đang nằm ở cột: Done</p>
-								<p className="content">Đã hoàn thành 1/1 nhiệm vụ</p>
-							</div>
+
+							{cards.length == 0 ?
+								<div>Có vẻ như bạn chưa tạo thẻ nào</div>
+								:
+								<>
+									{cards.map((data, key) => (
+										<div className="label">
+											<p className="name">Thẻ: {data.name}</p>
+											<p className="content">Mô tả: {data.description != null ? data.description : "Chưa thêm mô tả"}</p>
+											<p className="content">Done <FontAwesomeIcon icon="fa-solid fa-circle-check" /></p>
+											<span className="date">{data.estimatedFinish}</span>
+
+										</div>
+									))}
+								</>
+							}
 						</div>
 
 					</Col>
@@ -124,7 +120,7 @@ export default function Workspace() {
 								/>
 
 							</Card>
-							<p>Khi bạn được thêm vào một mục trong danh mục, mục đó sẽ hiển thị ở đây.</p>
+
 						</div>
 					</Col>
 				</Row>
