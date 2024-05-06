@@ -124,6 +124,10 @@ export const apiClient = {
     return callApi(`Tasks/${id}`, "post", data);
   },
 
+  fetchApiGetNewTask() {
+    return callApi(`Tasks`);
+  },
+
   fetchApiUpdateTask(id, data) {
     return callApi(`Tasks/${id}`, "put", data);
   },

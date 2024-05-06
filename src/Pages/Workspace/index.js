@@ -21,6 +21,7 @@ export default function Workspace() {
 	const token = localStorage.getItem(ACCESS_TOKEN);
 	const [project, setProject] = useState([]);
 	const [cards, setCards] = useState([])
+	const [taskShow, setTaskShow] = useState([])
 	useEffect(() => {
 		if (token) {
 			return;
@@ -37,7 +38,16 @@ export default function Workspace() {
 		}).catch(e => {
 		});
 	}, [])
-
+	useEffect(() => {
+		apiClient.fetchApiGetNewTask().then(res => {
+			if (res.data) {
+				setTaskShow(res.data)
+				console.log(taskShow)
+			} else {
+			}
+		}).catch(e => {
+		});
+	}, [])
 	const setId = (id) => {
 		apiClient.fetApiComplete(id).then(res => {
 			setCards(res.data)
@@ -116,11 +126,35 @@ export default function Workspace() {
 							>
 								<Meta
 									title="Cập nhật thông tin"
-									description="Mời mọi người vào nhóm, thêm mô tả, thêm ngày đến hạn và chúng tôi sẽ hiển thị hoạt động quan trọng nhất tại đây."
+									description="5 nhiệm vụ mới tạo gần đây...."
 								/>
 
 							</Card>
 
+							<table class="task-table">
+								<thead>
+									<tr>
+										<th>Tên</th>
+										<th>Tạo vào lúc</th>
+										<th>Trạng thái</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									{taskShow.map((data, index) => (
+										<>
+											<tr>
+												<td>{data.name}</td>
+												<td>Ngày:{new Date(data.createdOn).getDate()}/{new Date(data.createdOn).getMonth() + 1}/{new Date(data.createdOn).getFullYear()} Giờ:{new Date(data.createdOn).getHours()}:{new Date(data.createdOn).getMinutes()}</td>
+												<td>{data.isActive ? "Đã hoàn thành" : "Chưa hoàn thành"
+												}</td>
+											</tr>
+										</>
+									))
+									}
+
+								</tbody>
+							</table>
 						</div>
 					</Col>
 				</Row>
