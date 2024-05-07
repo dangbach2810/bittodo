@@ -89,29 +89,26 @@ export default function Workspace() {
 							</Col>
 						</Row>
 					</Col>
-					<Col className="side-content" sm={3}>
-
+					<Col className="side-card" sm={3}>
 						<h4>Các thẻ đã hoàn thành hết nhiệm vụ</h4>
 						<div className="label-container">
-
-							{cards.length == 0 ?
+							{cards.length === 0 ? (
 								<div>Có vẻ như bạn chưa tạo thẻ nào</div>
-								:
+							) : (
 								<>
 									{cards.map((data, key) => (
-										<div className="label">
+										<div className="label" key={key}>
 											<p className="name">Thẻ: {data.name}</p>
 											<p className="content">Mô tả: {data.description != null ? data.description : "Chưa thêm mô tả"}</p>
 											<p className="content">Done <FontAwesomeIcon icon="fa-solid fa-circle-check" /></p>
-											<span className="date">{data.estimatedFinish}</span>
-
+											<span className="date">{new Date(data.estimatedFinish).getDate()}/{new Date(data.estimatedFinish).getMonth() + 1}/{new Date(data.estimatedFinish).getFullYear()} {new Date(data.estimatedFinish).getHours()}:{new Date(data.estimatedFinish).getMinutes()}</span>
 										</div>
 									))}
 								</>
-							}
+							)}
 						</div>
-
 					</Col>
+
 					<Col className="s" sm={6}>
 						<div className="card-wrapper">
 							<Card

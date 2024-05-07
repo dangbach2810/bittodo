@@ -9,9 +9,14 @@ export const apiClient = {
   fetchApiLogin(data) {
     return callApi("Users/login", "post", data);
   },
-
-  fetchApiSignUp(data) {
-    return callApi("Users/register", "post", data);
+  fetchApiSettingEmail(data) {
+    return callApi("Users/Accept", "put", data);
+  },
+  fetchApiChangePassword(data) {
+    return callApi("Users/ChangePassword", "post", data);
+  },
+  fetchApiSignUp() {
+    return callApi("Users/SettingEmail");
   },
 
   fetchApiUser() {

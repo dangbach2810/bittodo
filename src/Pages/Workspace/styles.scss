@@ -18,31 +18,22 @@
     }
   }
 
-  .side-content {
-    .side-title {
-      .icon-trello {
-        color: #5e6c84;
-
-        width: 32px;
-      }
-
-      span {
-        display: inline-block;
-        color: #5e6c84;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 16px;
-        margin-top: 16px;
-        flex: 1 1 auto;
-        margin: 0;
-        padding: 8px 0;
-      }
-    }
-
+  .side-card {
     .label-container {
       display: flex;
       flex-direction: column;
       gap: 20px; // Khoảng cách giữa các label
+
+      .animated-card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .animated-card.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
       .label {
         background-color: #f8b7b7;
@@ -72,30 +63,56 @@
         }
       }
     }
+  }
+
+  .side-content {
+    .side-title {
+      .icon-trello {
+        color: #5e6c84;
+
+        width: 32px;
+      }
+
+      span {
+        display: inline-block;
+        color: #5e6c84;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
+        margin-top: 16px;
+        flex: 1 1 auto;
+        margin: 0;
+        padding: 8px 0;
+      }
+    }
+
+
 
   }
+
   .task-table {
     width: 100%;
     border-collapse: collapse;
-  
-    th, td {
+
+    th,
+    td {
       padding: 10px;
       border: 1px solid #ccc;
       text-align: left;
     }
-  
+
     th {
       background-color: #f2f2f2;
       font-weight: bold;
     }
-  
+
     tr:nth-child(even) {
       background-color: #f2f2f2;
     }
-  
+
     tr:hover {
       background-color: #ddd;
     }
   }
-  
+
 }

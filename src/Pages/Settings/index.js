@@ -1,11 +1,10 @@
 import Menu from "../HomePage/components/Menu";
 import avatar from "./../../Assets/images/user4.png";
 import banner from "./../../Assets/images/baner.svg";
-import { Form, Tabs, Input, Upload, Button, Radio, DatePicker } from "antd";
-import ConfirmPhoneModal from "../../Components/common/ConfirmPhoneModal";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Tabs, Input, Upload, Button, Radio, DatePicker, Checkbox, CheckboxProps } from "antd";
 import "./style.scss";
 import { useState, useEffect } from "react";
+
 import { apiClient } from "../../Services";
 import { BASE_URL_IMAGE } from "../../Contains/ConfigURL";
 import ImgCrop from "antd-img-crop";
@@ -27,6 +26,11 @@ const Settings = () => {
 	let [loading, setLoading] = useState(false);
 	const [dataUser, setDataUser] = useState({});
 	const [fileList, setFileList] = useState([]);
+	const [isChecked, setIsChecked] = useState();
+	const [isCheckedDay, setIsCheckedDay] = useState();
+	const [isCheckedWeek, setIsCheckedWeek] = useState();
+	const [isCheckedMonth, setIsCheckedMonth] = useState();
+	const [isCheckedYear, setIsCheckedYear] = useState();
 	// confirm phoneNumber
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [code, setCode] = useState("");
@@ -39,6 +43,7 @@ const Settings = () => {
 					setDataUser(res.data);
 					setDateOfBirth(res.data.dateOfBirth)
 					setGender(res.data.gender)
+
 				} else {
 					// throw Exception("Không có tài khoản.")
 					// console.log("You dont account.");
@@ -48,6 +53,17 @@ const Settings = () => {
 				// console.log(e);
 			});
 	}, []);
+	useEffect(() => {
+		apiClient.fetchApiSignUp().then((res) => {
+			if (res.data) {
+				setIsChecked(res.data.sendEmail)
+				setIsCheckedDay(res.data.sendDaily)
+				setIsCheckedWeek(res.data.sendWeekly)
+				setIsCheckedMonth(res.data.sendMonthly)
+				setIsCheckedYear(res.data.sendYearly)
+			}
+		}).catch((e) => { });
+	}, [])
 	// update info user
 	const handleSave = () => {
 		const data = {
@@ -161,7 +177,36 @@ const Settings = () => {
 		const image = new Image();
 		image.src = src;
 	};
+	const handleOnChange = () => {
+		setIsChecked(!isChecked);
+	};
+	const handleOnchangeDay = () => {
+		setIsCheckedDay(!isCheckedDay);
+	};
+	const handleOnChangeWeek = () => {
+		setIsCheckedWeek(!isCheckedWeek);
+	};
+	const handleOnChangeMonth = () => {
+		setIsCheckedMonth(!isCheckedMonth);
+	};
+	const handleOnChangeYear = () => {
+		setIsCheckedYear(!isCheckedYear);
+	};
+	const handleOnclickSave = () => {
+		let data = {
+			"sendEmail": isChecked,
+			"sendDaily": isCheckedDay,
+			"sendWeekly": isCheckedWeek,
+			"sendMonthly": isCheckedMonth,
+			"sendYearly": isCheckedYear,
+		}
 
+		apiClient.fetchApiSettingEmail(data).then((res) => {
+			if (res.data != null) {
+				alertSuccess("Cập nhật thời gian nhận Email thành công.");
+			}
+		})
+	}
 	return (
 		<>
 			<Menu />
@@ -298,57 +343,38 @@ const Settings = () => {
 										}
 									/>
 								</div>
-								<div className="confirm-input">
-									{dataUser.phoneNumberConfirmed === false ? (
-										<p
-											style={{
-												marginTop: "7%",
-												fontSize: 13,
-												fontWeight: "bold",
-												fontStyle: "italic",
-												color: "red",
-											}}
-										>
-											Vui lòng xác thực tài khoản *
-										</p>
-									) : (
-										<p
-											style={{
-												marginTop: "7%",
-												fontSize: 16,
-												fontWeight: "bold",
-											}}
-										>
-											Tài khoản đã xác thực
-										</p>
-									)}
-									<Input
-										className="input-name input-confirm"
-										placeholder="Số điện thoại"
-										value={dataUser.phoneNumber}
-									/>
-									{dataUser.phoneNumberConfirmed === false ? (
-										<Button
-											type="primary"
-											style={{
-												margin: "0 0 3px 5px",
-												pading: "4px",
-											}}
-											onClick={showModal}
-										>
-											Xác thực
-										</Button>
-									) : null}
+								<hr />
 
-									<ConfirmPhoneModal
-										isModalVisible={isModalVisible}
-										handleOk={handleOk}
-										handleChangeCode={handleChangeCode}
-										handleCancel={handleCancel}
-										handleGetCode={handleGetCode}
-										handleSendCode={handleSendCode}
+								<div className="check-list">
+									<input
+										type="checkbox"
+										checked={isChecked}
+										onChange={handleOnChange}
 									/>
+									Đồng ý nhận Email
+									<div style={{ marginLeft: '15px' }}>
+										{isChecked ?
+											<>
+												<input type="checkbox" id="checkday" checked={isCheckedDay}
+													onChange={handleOnchangeDay} />
+												<label for="checkday"> Mỗi ngày</label><br />
+												<input type="checkbox" id="checkweek" checked={isCheckedWeek}
+													onChange={handleOnChangeWeek} />
+												<label for="checkweek"> Mỗi Tuần</label><br />
+												<input type="checkbox" id="checkmonth" checked={isCheckedMonth}
+													onChange={handleOnChangeMonth} />
+												<label for="checkmonth"> Mỗi Tháng</label><br />
+												<input type="checkbox" id="checkyear" checked={isCheckedYear}
+													onChange={handleOnChangeYear} />
+												<label for="checkyear"> Mỗi Năm</label><br />
+											</>
+											: ""}
+									</div>
+									<div onClick={handleOnclickSave} className="btn-save">Lưu</div>
 								</div>
+
+
+
 								<Button onClick={handleSave} className="submit-button">
 									Lưu
 								</Button>
