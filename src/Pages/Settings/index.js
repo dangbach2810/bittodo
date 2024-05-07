@@ -54,7 +54,7 @@ const Settings = () => {
 			});
 	}, []);
 	useEffect(() => {
-		apiClient.fetchApiSignUp().then((res) => {
+		apiClient.fetchApiSettingMail().then((res) => {
 			if (res.data) {
 				setIsChecked(res.data.sendEmail)
 				setIsCheckedDay(res.data.sendDaily)

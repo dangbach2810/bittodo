@@ -50,10 +50,10 @@ export default function RegisterPage(props) {
         <>
             {loading && <div className='loading-style'> <Loading type="bars" color="white" /> </div>}
             <div className="main-LOGI">
-                <h3 className='login-title'><img src={Subito} /></h3>
+                {/* <h3 className='login-title'><img src={Subito} /></h3> */}
                 <div className="main-content">
                     <div className="card-box">
-                        <h5 className="card-header">Sign Up to Subito</h5>
+                        <h5 className="card-header">Sign Up to BIT</h5>
                         <p style={{ textAlign: 'center' }}>{validate ? validate : ''}</p>
                         <div className="card-body">
                             <Form
@@ -120,6 +120,7 @@ export default function RegisterPage(props) {
                                     name="phone"
                                     rules={[{ required: true, message: 'Please input your phone number!' }]}
                                 >
+                                    <Input placeholder="Enter phone number" />
                                 </Form.Item>
 
                                 <Form.Item

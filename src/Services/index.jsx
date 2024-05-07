@@ -15,7 +15,10 @@ export const apiClient = {
   fetchApiChangePassword(data) {
     return callApi("Users/ChangePassword", "post", data);
   },
-  fetchApiSignUp() {
+  fetchApiSignUp(data) {
+    return callApi("Users/register", "post", data);
+  },
+  fetchApiSettingMail() {
     return callApi("Users/SettingEmail");
   },
 
