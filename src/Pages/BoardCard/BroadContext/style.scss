@@ -26,6 +26,7 @@ body {
     z-index: 999;
     overflow-x: auto;
     overflow-y: auto;
+
     .board-columns {
         display: flex;
         margin: 0px $gap $gap;
@@ -255,7 +256,9 @@ body {
 }
 
 .board-title {
+    width: 100%;
     font-size: 20px;
+    background-color: #afdaf3;
 }
 
 .user-card {

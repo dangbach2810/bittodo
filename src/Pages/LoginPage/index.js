@@ -122,10 +122,6 @@ export default function LoginPage(props) {
                                 </Form.Item>
                             </Form>
                         </div>
-                        <p className='text-align-center'>OR</p>
-                        <Button icon={<GooglePlusOutlined style={{ fontSize: '26px', color: '#08c' }} />} style={{ width: "100%", height: "auto", padding: '10px 0 5px 0', boxShadow: "1px 1px 2px rgb(141, 139, 139)", display: 'flex', justifyContent: 'center', alignContent: 'center' }} loading={loading}>
-                            Continue with Google
-                        </Button>
                         <div className='sign-up text-align-center'>
                             <Link to={"/sign-up"} className='sign-up text-align-center'>
                                 Sign up for an Account.

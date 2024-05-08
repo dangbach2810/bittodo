@@ -223,12 +223,7 @@ const BroadContext = () => {
 		<>
 
 			<Menu checked="true" boardId={boardId} />
-			<input
-				class="board-title"
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-				onBlur={handleClickOutside}
-			/>
+
 			<div
 				className="trello-master"
 				style={{
@@ -238,6 +233,13 @@ const BroadContext = () => {
 					backgroundPosition: "center",
 				}}
 			>
+				<input
+					class="board-title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+					onBlur={handleClickOutside}
+
+				/>
 				<div className="board-columns">
 					<Container
 						orientation="horizontal"
