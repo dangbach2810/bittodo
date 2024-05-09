@@ -84,7 +84,7 @@ export default function LoginPage(props) {
                                             message: 'Please input your email!',
                                         },
                                         {
-                                            //pattern: /^\S+@\S+\.\S+$/,
+                                            pattern: /^\S+@\S+\.\S+$/,
                                             message: 'Email wrong format!',
                                         },
                                     ]}
